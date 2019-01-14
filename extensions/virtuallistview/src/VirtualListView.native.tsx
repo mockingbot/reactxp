@@ -39,6 +39,7 @@ import * as assert from 'assert';
 import * as _ from 'lodash';
 import { RefreshControlProps } from 'react-native';
 import * as RX from 'reactxp';
+import ScrollView from './ScrollView.native';
 
 import { VirtualListCell, VirtualListCellInfo, VirtualListCellRenderDetails } from './VirtualListCell';
 
@@ -1090,7 +1091,7 @@ export class VirtualListView<ItemInfo extends VirtualListViewItemInfo>
     }
 
     scrollToTop = (animated = true, top = 0) => {
-        const scrollView = this.refs[_scrollViewRef] as RX.ScrollView;
+        const scrollView = this.refs[_scrollViewRef] as ScrollView;
         if (scrollView) {
             scrollView.setScrollTop(top, animated);
         }
@@ -1237,7 +1238,7 @@ export class VirtualListView<ItemInfo extends VirtualListViewItemInfo>
         staticContainerStyle.push(this._containerAnimatedStyle);
 
         return (
-            <RX.ScrollView
+            <ScrollView
                 ref={ _scrollViewRef }
                 testId={ this.props.testId }
                 onLayout={ this._onLayoutContainer }
@@ -1253,11 +1254,12 @@ export class VirtualListView<ItemInfo extends VirtualListViewItemInfo>
                 onKeyPress={ this._onKeyDown }
                 scrollEnabled={ !this.props.disableScrolling }
                 scrollIndicatorInsets={ this.props.scrollIndicatorInsets }
+                refreshControl={ this.props.refreshControl }
             >
                 <RX.Animated.View style={ staticContainerStyle }>
                     { itemsRendered }
                 </RX.Animated.View>
-            </RX.ScrollView>
+            </ScrollView>
         );
     }
 
